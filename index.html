@@ -1,0 +1,885 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brew & Bliss | Coffee Shop</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap');
+
+:root {
+    --brown: #5b3826;
+    --dark: #241912;
+    --cream: #faf5ed;
+    --orange: #c98752;
+    --light: #eee1d1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+}
+
+button, input { font: inherit; }
+
+header {
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8%;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 3px 20px #0000000a;
+}
+
+.logo {
+    font: bold 27px 'Playfair Display', serif;
+    color: var(--brown);
+}
+
+.logo span { color: var(--orange); }
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: #49372d;
+    text-decoration: none;
+    font-size: 14px;
+    transition: .3s;
+}
+
+nav a:hover { color: var(--orange); }
+
+.cart-btn {
+    background: var(--brown);
+    color: white;
+    padding: 12px 19px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.cart-btn:hover { background: var(--orange); }
+
+.hero {
+    min-height: 560px;
+    padding: 65px 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    background: linear-gradient(120deg,#f4e6d4,#e8d1b7);
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 510px;
+    animation: slideIn 1s ease;
+}
+
+.tag {
+    display: inline-block;
+    background: #fff8ed;
+    color: var(--brown);
+    padding: 9px 17px;
+    border-radius: 30px;
+    font-size: 12px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font: 700 clamp(43px,6vw,70px)/1.13 'Playfair Display',serif;
+    margin-bottom: 20px;
+}
+
+.hero h1 span { color: #a96d3e; }
+
+.hero p {
+    color: #715b4d;
+    line-height: 1.9;
+    margin-bottom: 28px;
+}
+
+.main-btn {
+    display: inline-block;
+    background: var(--brown);
+    color: white;
+    padding: 15px 28px;
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.main-btn:hover {
+    background: var(--orange);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px #5b382633;
+}
+
+.hero img {
+    width: 43%;
+    height: 410px;
+    object-fit: cover;
+    border-radius: 45% 45% 18px 18px;
+    box-shadow: 0 20px 40px #5b382633;
+    animation: float 4s ease-in-out infinite;
+}
+
+.section { padding: 80px 8%; }
+
+.heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.heading h2 {
+    font: 700 40px 'Playfair Display',serif;
+    margin-bottom: 12px;
+}
+
+.heading p {
+    color: #917e70;
+    font-size: 14px;
+}
+
+.search {
+    display: block;
+    width: min(100%,400px);
+    margin: 0 auto 28px;
+    padding: 15px 20px;
+    border: 1px solid #e2d0bd;
+    border-radius: 30px;
+    outline: none;
+    background: white;
+}
+
+.search:focus { border-color: var(--orange); }
+
+.categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 35px;
+}
+
+.category {
+    padding: 11px 22px;
+    border: 1px solid #dfcbb7;
+    background: white;
+    color: var(--brown);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.category.active,
+.category:hover {
+    background: var(--brown);
+    color: white;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 25px;
+}
+
+.product {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px #00000009;
+    transition: .35s;
+    animation: fadeUp .6s both;
+}
+
+.product:hover {
+    transform: translateY(-9px);
+    box-shadow: 0 15px 30px #5b382622;
+}
+
+.product-img {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+
+.product:hover .product-img img {
+    transform: scale(1.09);
+}
+
+.heart {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    width: 37px;
+    height: 37px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.heart.liked { color: #d84f56; }
+
+.product-info { padding: 18px; }
+
+.product-info h3 {
+    font: 600 19px 'Playfair Display',serif;
+    margin-bottom: 8px;
+}
+
+.product-info p {
+    color: #a18b7d;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 800;
+    color: #a66b3d;
+}
+
+.add-btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    background: #f1e5d8;
+    color: var(--brown);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.add-btn:hover {
+    background: var(--brown);
+    color: white;
+}
+
+.banner {
+    background: #39251a;
+    color: white;
+    padding: 65px 9%;
+    text-align: center;
+}
+
+.banner h2 {
+    font: 40px 'Playfair Display',serif;
+    margin-bottom: 15px;
+}
+
+.banner p {
+    color: #d9c2ac;
+    margin-bottom: 25px;
+    line-height: 1.8;
+}
+
+.banner .main-btn {
+    background: var(--orange);
+}
+
+.about {
+    display: flex;
+    align-items: center;
+    gap: 55px;
+}
+
+.about img {
+    width: 45%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+.about h2 {
+    font: 38px 'Playfair Display',serif;
+    margin-bottom: 20px;
+}
+
+.about p {
+    line-height: 1.9;
+    color: #806f61;
+    margin-bottom: 24px;
+}
+
+footer {
+    background: #241912;
+    color: white;
+    text-align: center;
+    padding: 38px 15px;
+}
+
+footer p {
+    color: #c7b3a0;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+/* Shopping cart */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: #0008;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: -430px;
+    width: min(400px,100%);
+    height: 100%;
+    overflow-y: auto;
+    background: white;
+    z-index: 201;
+    padding: 25px;
+    transition: .4s;
+}
+
+.cart-panel.show { right: 0; }
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.close {
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: #f1e5d8;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.cart-item {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    padding: 13px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cart-item-info { flex: 1; }
+
+.cart-item-info p {
+    color: var(--orange);
+    margin-top: 5px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.quantity button {
+    border: none;
+    background: #f1e5d8;
+    border-radius: 5px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 21px;
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+.checkout {
+    width: 100%;
+    margin-top: 22px;
+}
+
+.empty {
+    text-align: center;
+    padding: 45px 10px;
+    color: #917e70;
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%,100px);
+    padding: 14px 24px;
+    border-radius: 30px;
+    background: #39251a;
+    color: white;
+    z-index: 300;
+    transition: .4s;
+}
+
+.toast.show { transform: translate(-50%,0); }
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-35px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width:950px) {
+    .products { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(max-width:600px) {
+    header { padding: 0 5%; }
+    nav { display: none; }
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 55px 7%;
+    }
+    .hero img { width: 90%; height: 280px; }
+    .products { gap: 12px; }
+    .product-img { height: 155px; }
+    .product-info { padding: 12px; }
+    .product-info h3 { font-size: 16px; }
+    .add-btn { padding: 8px; font-size: 11px; }
+    .about { flex-direction: column; }
+    .about img { width: 100%; }
+    .about h2 { font-size: 30px; }
+    .section { padding: 55px 5%; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">☕ Brew <span>& Bliss</span></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <button class="cart-btn" onclick="openCart()">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <span class="tag">☕ YOUR DAILY COFFEE ESCAPE</span>
+        <h1>Life begins after <span>coffee.</span></h1>
+        <p>
+            Experience the perfect blend of rich coffee,
+            delicious flavors and unforgettable moments.
+            Your favorite cup is waiting for you!
+        </p>
+        <a href="#menu" class="main-btn">Explore Our Menu →</a>
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900"
+         alt="Fresh coffee">
+</section>
+
+<section class="section" id="menu">
+
+    <div class="heading">
+        <h2>Our Coffee Menu</h2>
+        <p>Freshly brewed happiness in every cup ☕</p>
+    </div>
+
+    <input type="text" class="search"
+           id="searchInput"
+           placeholder="🔍 Search your favorite coffee...">
+
+    <div class="categories">
+        <button class="category active" onclick="filterProducts('All',this)">All</button>
+        <button class="category" onclick="filterProducts('Hot Coffee',this)">Hot Coffee</button>
+        <button class="category" onclick="filterProducts('Cold Coffee',this)">Cold Coffee</button>
+        <button class="category" onclick="filterProducts('Special',this)">Special</button>
+        <button class="category" onclick="filterProducts('Desserts',this)">Desserts</button>
+    </div>
+
+    <div class="products" id="productGrid"></div>
+
+</section>
+
+<section class="banner">
+    <h2>Good Coffee. Good Mood. ❤️</h2>
+    <p>Take a break, enjoy your favorite coffee and make every moment special.</p>
+    <a href="#menu" class="main-btn">Order Your Coffee</a>
+</section>
+
+<section class="section about" id="about">
+    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=900"
+         alt="Coffee shop interior">
+
+    <div>
+        <h2>More than just coffee.</h2>
+        <p>
+            At Brew & Bliss, every cup is prepared with passion.
+            We carefully select our coffee beans and create
+            delicious drinks to make your day better.
+            Come for the coffee, stay for the happiness.
+        </p>
+        <a href="#menu" class="main-btn">Discover Our Menu</a>
+    </div>
+</section>
+
+<footer>
+    <h2>☕ Brew & Bliss</h2>
+    <p>Brewing happiness, one cup at a time.</p>
+    <p>© 2026 Brew & Bliss. All rights reserved.</p>
+</footer>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <h2>🛒 Your Cart</h2>
+        <button class="close" onclick="closeCart()">✕</button>
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="total">
+        <span>Total</span>
+        <span id="cartTotal">₹0</span>
+    </div>
+
+    <button class="main-btn checkout" onclick="checkout()">
+        Checkout →
+    </button>
+</div>
+
+<div class="toast" id="toast">Added to cart! ☕</div>
+
+<script>
+
+const products = [
+    {
+        id:1,
+        name:"Classic Cappuccino",
+        category:"Hot Coffee",
+        price:149,
+        desc:"Rich espresso with creamy milk foam",
+        image:"https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600"
+    },
+    {
+        id:2,
+        name:"Caramel Latte",
+        category:"Hot Coffee",
+        price:179,
+        desc:"Smooth coffee with sweet caramel",
+        image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600"
+    },
+    {
+        id:3,
+        name:"Iced Coffee",
+        category:"Cold Coffee",
+        price:159,
+        desc:"Refreshing chilled coffee",
+        image:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600"
+    },
+    {
+        id:4,
+        name:"Mocha Coffee",
+        category:"Special",
+        price:199,
+        desc:"Chocolate blended with espresso",
+        image:"https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?w=600"
+    },
+    {
+        id:5,
+        name:"Espresso",
+        category:"Hot Coffee",
+        price:99,
+        desc:"Strong and bold coffee shot",
+        image:"https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=600"
+    },
+    {
+        id:6,
+        name:"Cold Caramel",
+        category:"Cold Coffee",
+        price:189,
+        desc:"Iced coffee with caramel flavor",
+        image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600"
+    },
+    {
+        id:7,
+        name:"Chocolate Cake",
+        category:"Desserts",
+        price:129,
+        desc:"Delicious chocolate dessert",
+        image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600"
+    },
+    {
+        id:8,
+        name:"Chocolate Brownie",
+        category:"Desserts",
+        price:109,
+        desc:"Soft and rich chocolate brownie",
+        image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600"
+    }
+];
+
+let cart = [];
+let selectedCategory = "All";
+
+function displayProducts() {
+
+    const search = document.getElementById("searchInput")
+        .value.toLowerCase();
+
+    const filtered = products.filter(p =>
+        (selectedCategory === "All" ||
+        p.category === selectedCategory) &&
+        p.name.toLowerCase().includes(search)
+    );
+
+    const grid = document.getElementById("productGrid");
+
+    if (!filtered.length) {
+        grid.innerHTML = "<p>No products found ☕</p>";
+        return;
+    }
+
+    grid.innerHTML = filtered.map(p => `
+        <div class="product">
+            <div class="product-img">
+                <img src="${p.image}" alt="${p.name}" loading="lazy">
+                <button class="heart" onclick="toggleHeart(this)">♡</button>
+            </div>
+
+            <div class="product-info">
+                <h3>${p.name}</h3>
+                <p>${p.desc}</p>
+
+                <div class="price-row">
+                    <span class="price">₹${p.price}</span>
+                    <button class="add-btn" onclick="addToCart(${p.id})">
+                        + Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join("");
+}
+
+function filterProducts(category,btn) {
+
+    selectedCategory = category;
+
+    document.querySelectorAll(".category")
+        .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    displayProducts();
+}
+
+document.getElementById("searchInput")
+    .addEventListener("input",displayProducts);
+
+function toggleHeart(btn) {
+
+    btn.classList.toggle("liked");
+
+    btn.innerHTML =
+        btn.classList.contains("liked") ? "♥" : "♡";
+}
+
+function addToCart(id) {
+
+    const product = products.find(p => p.id === id);
+
+    const existing = cart.find(p => p.id === id);
+
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({...product,qty:1});
+    }
+
+    updateCart();
+    showToast("Coffee added to cart! ☕");
+}
+
+function updateCart() {
+
+    const count = cart.reduce((s,p) => s+p.qty,0);
+
+    const total = cart.reduce(
+        (s,p) => s+p.price*p.qty,0
+    );
+
+    document.getElementById("cartCount").textContent = count;
+
+    document.getElementById("cartTotal").textContent = "₹"+total;
+
+    const container = document.getElementById("cartItems");
+
+    if (!cart.length) {
+        container.innerHTML = `
+            <div class="empty">
+                <h1>☕</h1>
+                <p>Your cart is empty!</p>
+                <p>Let's get some coffee.</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = cart.map(p => `
+        <div class="cart-item">
+            <img src="${p.image}" alt="${p.name}">
+
+            <div class="cart-item-info">
+                <strong>${p.name}</strong>
+                <p>₹${p.price}</p>
+
+                <div class="quantity">
+                    <button onclick="changeQty(${p.id},-1)">−</button>
+                    <span>${p.qty}</span>
+                    <button onclick="changeQty(${p.id},1)">+</button>
+                </div>
+            </div>
+        </div>
+    `).join("");
+}
+
+function changeQty(id,change) {
+
+    const item = cart.find(p => p.id === id);
+
+    if (!item) return;
+
+    item.qty += change;
+
+    if (item.qty <= 0) {
+        cart = cart.filter(p => p.id !== id);
+    }
+
+    updateCart();
+}
+
+function openCart() {
+
+    document.getElementById("cartPanel").classList.add("show");
+
+    document.getElementById("overlay").classList.add("show");
+}
+
+function closeCart() {
+
+    document.getElementById("cartPanel").classList.remove("show");
+
+    document.getElementById("overlay").classList.remove("show");
+}
+
+function checkout() {
+
+    if (!cart.length) {
+        showToast("Your cart is empty! ☕");
+        return;
+    }
+
+    const total = cart.reduce(
+        (s,p) => s+p.price*p.qty,0
+    );
+
+    alert(
+        "Thank you for ordering from Brew & Bliss! ☕\n\nYour demo order total: ₹"+total
+    );
+
+    cart = [];
+
+    updateCart();
+
+    closeCart();
+}
+
+let toastTimer;
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    },2000);
+}
+
+displayProducts();
+updateCart();
+
+</script>
+
+</body>
+</html>
